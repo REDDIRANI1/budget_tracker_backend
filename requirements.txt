@@ -7,3 +7,4 @@ django-cors-headers
 djangorestframework-simplejwt
 drf_spectacular
 drf-spectacular
+django-filter
