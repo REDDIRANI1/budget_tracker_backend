@@ -101,6 +101,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DEBUG = True  # Set to False in production
 
 # Hosts that can access the app
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']  # Add other domains in production
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','budget-tracker-backend-1-7iom.onrender.com']  # Add other domains in production
 ROOT_URLCONF = 'budget_tracker.urls'
 SECRET_KEY = '5k-wk,I[OhqQ@=GfxUm_-\kt{g!O~]}grXk}`-88[?w^&F0'
