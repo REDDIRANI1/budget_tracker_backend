@@ -8,3 +8,4 @@ djangorestframework-simplejwt
 drf_spectacular
 drf-spectacular
 django-filter
+python-dotenv
