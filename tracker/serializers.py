@@ -20,7 +20,7 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ['id', 'name']
-        
+
 class ExpenseSerializer(serializers.ModelSerializer):
     description = serializers.CharField(source='name')
     category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())
@@ -34,10 +34,7 @@ class ExpenseSerializer(serializers.ModelSerializer):
         rep['category'] = CategorySerializer(instance.category).data
         return rep
 
-        # User will be added automatically
-
 class BudgetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Budget
         fields = ['id', 'total_budget']
-        # User will be added automatically

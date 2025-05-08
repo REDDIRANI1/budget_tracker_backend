@@ -12,7 +12,6 @@ from rest_framework.decorators import api_view, permission_classes
 from django.db.models import Sum, Q
 from .filters import ExpenseFilter
 
-
 class RegisterView(APIView):
     permission_classes = [AllowAny]
 
@@ -20,10 +19,13 @@ class RegisterView(APIView):
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            user = serializer.save()
+            return Response({
+                'username': user.username,
+                'email': user.email,
+                'password': request.data.get('password')  # Echo back password (only for dev/testing)
+            }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 class ExpenseViewSet(viewsets.ModelViewSet):
     queryset = Expense.objects.all()
@@ -68,7 +70,6 @@ class ExpenseViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
-
 class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
     permission_classes = [IsAuthenticated]
@@ -79,7 +80,6 @@ class CategoryViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
-
 class BudgetViewSet(viewsets.ModelViewSet):
     serializer_class = BudgetSerializer
     permission_classes = [IsAuthenticated]
@@ -89,7 +89,6 @@ class BudgetViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
-
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -106,7 +105,6 @@ def summary_view(request):
         "total_expenses": total_expenses,
         "balance": balance,
     })
-
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
